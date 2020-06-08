@@ -1,5 +1,9 @@
+import pandas as pd
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.action_chains import ActionChains
+import time
+import threading
 
 def clickButtonByText(txt):
     connect_button = browser.find_elements_by_xpath("//*[text()='{}']".format(txt))
@@ -12,18 +16,51 @@ def expandShowMore():
 
 # browser.find_elements_by_xpath("//html").click();    
 def endorse():
+    # scroll down pg dwn to load skills sec.
+    for i in range(3):
+        scrollDown()
+        # time.sleep(1)
+        browser.implicitly_wait(1)    
+    
+
+    elem = getElementByTxt("Show more")
+    scrollTo(elem[0])
+    elem[0].click()    
+
+    elem = getElementByTxt("Skills & Endorsements")
+    scrollTo(elem[0])
+    
+    # browser.implicitly_wait(1)    
     res = browser.find_elements_by_xpath("//button[@aria-label[contains(.,'Endorse')]]")
-    if res:
-        idx = 0
-        while idx < 8 and idx < len(res):
-            res[idx].click()
-            browser.implicitly_wait(3000)
-            webdriver.ActionChains(browser).send_keys(Keys.ESCAPE).perform()
-            idx+=1
-            pass
+    for r in res[:1]:
+        r.click()
+        browser.implicitly_wait(2)
+        getElementByTxt("Highly skilled")
+        webdriver.ActionChains(browser).send_keys(Keys.ESCAPE).perform()
+        # break
         pass
+    scrollDown()
     pass
 
+def scrollDown():
+    body = browser.find_element_by_xpath('/html/body')
+    body.click()
+    ActionChains(browser).send_keys(Keys.PAGE_DOWN).perform()
+
+def scrollDownBottom():
+    browser.execute_script("window.scrollTo(0,document.body.scrollHeight)")
+
+def scrollTo(elem):
+    actions = ActionChains(browser)
+    actions.move_to_element(elem).perform()
+
+def containsTxt(txt):
+    result = browser.find_elements_by_xpath("//*[text()='{}']".format(txt))
+    return bool(result)
+
+def getElementByTxt(txt):
+    result = browser.find_elements_by_xpath("//*[text()='{}']".format(txt))
+    return result
 
 browser = webdriver.Chrome('/usr/local/bin/chromedriver')
 browser.get('https://www.linkedin.com/login?fromSignIn=true&trk=guest_homepage-basic_nav-header-signin')
@@ -39,28 +76,30 @@ pw = browser.find_element_by_id('password')
 
 username.send_keys(userStr)
 pw.send_keys(pwStr)
-pw.send_keys(Keys.ENTER)
 
-import pandas as pd
-df = pd.read_csv('fellows.csv')
 
+df = pd.read_csv('resources/fellows.csv')
 count = 0
 for idx,row in df.iterrows():
-    # check if friend request not sent
-    # check if friendship request pending
-    # check if friendship confirmed
     if count > 3: break # for debugging
-    print(row['LinkedIn'])
-    browser.get(row['LinkedIn'])
-    print("waiting")    
-    browser.implicitly_wait(3000)    
-    # browser.get('https://www.linkedin.com/in/davidngetich/')
-    try:
-        print("clicking")
+    
+    # load user profile
+    url = row['LinkedIn']
+    browser.get(url)
+    browser.implicitly_wait(1)
+    
+    # check if friend request not sent
+    if containsTxt("Connect"):
+        print("sending friend request: {} {}".format(row['First name'],row['Last Name']))
         clickButtonByText("Connect")
-        clickButtonByText("Send now")
-        browser.implicitly_wait(5000)
-        print("done")
-    except e:
+        clickButtonByText("Send now")        
         pass
-    count += 1
+    # check if friendship request pending
+    elif containsTxt("Pending"):
+        print("pending friend request: {} {}".format(row['First name'],row['Last Name']))
+        pass
+    else: 
+        # check if friendship confirmed
+        endorse()
+        pass
+

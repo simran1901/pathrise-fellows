@@ -1,4 +1,5 @@
 # pathrise-fellows
+## Automatic connect and endorse
 
 Instructions for installation: 
 
