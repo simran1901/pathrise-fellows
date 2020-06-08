@@ -20,21 +20,19 @@ def endorse():
     for i in range(3):
         scrollDown()
         # time.sleep(1)
-        browser.implicitly_wait(1)    
-    
-
+    browser.implicitly_wait(3)            
+    elem = getElementByTxt("Skills & Endorsements")
+    scrollTo(elem[0])  
+    browser.implicitly_wait(3)      
     elem = getElementByTxt("Show more")
     scrollTo(elem[0])
-    elem[0].click()    
-
-    elem = getElementByTxt("Skills & Endorsements")
-    scrollTo(elem[0])
-    
-    # browser.implicitly_wait(1)    
+    elem[0].click()
+    browser.implicitly_wait(3)    
     res = browser.find_elements_by_xpath("//button[@aria-label[contains(.,'Endorse')]]")
-    for r in res[:1]:
+    for r in res[:5]:
+        scrollTo(r)        
         r.click()
-        browser.implicitly_wait(2)
+        browser.implicitly_wait(5)
         getElementByTxt("Highly skilled")
         webdriver.ActionChains(browser).send_keys(Keys.ESCAPE).perform()
         # break
@@ -44,7 +42,7 @@ def endorse():
 
 def scrollDown():
     body = browser.find_element_by_xpath('/html/body')
-    body.click()
+    # body.click()
     ActionChains(browser).send_keys(Keys.PAGE_DOWN).perform()
 
 def scrollDownBottom():
@@ -86,13 +84,13 @@ for idx,row in df.iterrows():
     # load user profile
     url = row['LinkedIn']
     browser.get(url)
-    browser.implicitly_wait(1)
+    browser.implicitly_wait(3)
     
     # check if friend request not sent
     if containsTxt("Connect"):
         print("sending friend request: {} {}".format(row['First name'],row['Last Name']))
         clickButtonByText("Connect")
-        clickButtonByText("Send now")        
+        # clickButtonByText("Send now")        
         pass
     # check if friendship request pending
     elif containsTxt("Pending"):
