@@ -10,16 +10,15 @@ def clickButtonByText(txt):
     if connect_button:
         connect_button[0].click()
 
-# [contains(.,'pv-profile-section__card-action-bar pv-skills-section__additional-skills')]      
 def expandShowMore():
     browser.find_elements_by_xpath('//button[@class= ')[0].click()
 
-# browser.find_elements_by_xpath("//html").click();    
+
 def endorse():
     # scroll down pg dwn to load skills sec.
     for i in range(3):
         scrollDown()
-        # time.sleep(1)
+        pass
     browser.implicitly_wait(3)            
     elem = getElementByTxt("Skills & Endorsements")
     scrollTo(elem[0])  
@@ -60,11 +59,11 @@ def getElementByTxt(txt):
     result = browser.find_elements_by_xpath("//*[text()='{}']".format(txt))
     return result
 
+# todo: have assert chromedriver available
 browser = webdriver.Chrome('/usr/local/bin/chromedriver')
 browser.get('https://www.linkedin.com/login?fromSignIn=true&trk=guest_homepage-basic_nav-header-signin')
 
-
-## Type this in
+# todo: change this to be args passed in
 f = open("resources/auth.txt","r")
 userStr = f.readline()
 pwStr = f.readline()
