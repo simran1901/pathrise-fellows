@@ -14,8 +14,9 @@ For authentication, create a new directory:
 
 Store the CSV here, as well as authenticaiton details in `resources/auth.txt` as follows:
 
-`
-your@email.com \n
+```
+your@email.com
+
 yourPassword
-`
+```
 
