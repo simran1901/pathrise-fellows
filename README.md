@@ -22,7 +22,7 @@ yourPassword
 
 ### Running:
 
-In commandline run `python3 script.py`, this should start the selenium chrome driver, log in using `resources/auth.txt`, and iterate through `aresources/fellows.csv`
+In commandline run `python3 script.py resources/auth.txt resources/fellows.csv`, this should start the selenium chrome driver, log in using `resources/auth.txt`, and iterate through `resources/fellows.csv`
 
 
 ### Requirements
