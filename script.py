@@ -89,7 +89,7 @@ for idx,row in df.iterrows():
     if containsTxt("Connect"):
         print("sending friend request: {} {}".format(row['First name'],row['Last Name']))
         clickButtonByText("Connect")
-        # clickButtonByText("Send now")        
+        clickButtonByText("Send now")        
         pass
     # check if friendship request pending
     elif containsTxt("Pending"):

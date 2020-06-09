@@ -27,5 +27,5 @@ In commandline run `python3 script.py`, this should start the selenium chrome dr
 
 ### Requirements
  * python3
- * pandas
+ * panda
  * selenium webdriver(chrome)
