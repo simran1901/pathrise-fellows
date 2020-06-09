@@ -20,3 +20,6 @@ your@email.com
 yourPassword
 ```
 
+### Running:
+
+In commandline run `python3 script.py`, this should start the selenium chrome driver, log in using `resources/auth.txt`, and iterate through `aresources/fellows.csv`
