@@ -36,7 +36,7 @@ class ConnectEndorse():
         # res = self.browser.find_elements_by_xpath("//button[@aria-label[contains(.,'Endorse')]]")
         res = self.browser.find_elements_by_xpath(\
                 "//button[@aria-label[contains(.,'Endorse')] and @aria-pressed[contains(.,'false')] ]")    
-        for r in res[:1]:
+        for r in res[:10]:
             try:
                 self.scrollTo(r)        
                 r.click()
