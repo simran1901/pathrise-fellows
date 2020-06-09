@@ -25,6 +25,9 @@ class ConnectEndorse():
         self.scrollDown()
         self.scrollDown()
         self.scrollDown()
+        self.scrollDown()
+        self.scrollDown()
+        self.scrollDownBottom()                
         # Open skills and endorsements, show more
         elem = self.getElementByTxt("Skills & Endorsements")
         self.scrollTo(elem[0])  
@@ -39,10 +42,10 @@ class ConnectEndorse():
         for r in res[:10]:
             try:
                 self.scrollTo(r)        
-                r.click()
-                self.browser.implicitly_wait(5)
-                self.getElementByTxt("Highly skilled")
-                webdriver.ActionChains(self.browser).send_keys(Keys.ESCAPE).perform()
+                #r.click()
+                #self.browser.implicitly_wait(5)
+                #self.getElementByTxt("Highly skilled")
+                #webdriver.ActionChains(self.browser).send_keys(Keys.ESCAPE).perform()
             except:
                 print("exception occured in endorsement")
             # break
@@ -92,8 +95,8 @@ class ConnectEndorse():
             self.browser.get(url)
             self.browser.implicitly_wait(2)
             # croll to loaded section
-            elem = self.getElementByTxt("About")
-            self.scrollTo(elem[0])        
+            # elem = self.getElementByTxt("Highlights")
+            # self.scrollTo(elem[0])        
             # check if friend request not sent
             if self.containsTxt("Connect"):
                 print("sending friend request: {} {}".format(row['First name'],row['Last Name']))
