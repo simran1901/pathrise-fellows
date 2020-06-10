@@ -20,6 +20,11 @@ yourPassword
 ```
 
 ### Running:
+```
+usage: script.py [-h] loginPath fellowsCsvPath
+loginPath: path to plaintxt containing login info
+fellowsCsvPath: path to csv of desired candidates
+```
 
 In commandline run `python3 script.py resources/auth.txt resources/fellows.csv`, this should start the selenium chrome driver, automatically log in using `resources/auth.txt`, and iterate through `resources/fellows.csv`
 
