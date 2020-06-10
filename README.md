@@ -1,5 +1,5 @@
 # pathrise-fellows
-**Automatic connect and endorse**
+**Automatic connect and endorse profiles in a CSV**
 
 ### Instructions for installation: 
 
@@ -12,17 +12,16 @@ For MacOS, install of chromedriver through homebrew (recommended)
 For authentication, create a new directory:
 `resources/`
 
-Store the CSV here, as well as authenticaiton details in `resources/auth.txt` as follows:
+Store the `resources/fellows at pathrise.csv` CSV here, as well as authentication details in `resources/auth.txt` as follows:
 
 ```
 your@email.com
-
 yourPassword
 ```
 
 ### Running:
 
-In commandline run `python3 script.py resources/auth.txt resources/fellows.csv`, this should start the selenium chrome driver, log in using `resources/auth.txt`, and iterate through `resources/fellows.csv`
+In commandline run `python3 script.py resources/auth.txt resources/fellows.csv`, this should start the selenium chrome driver, automatically log in using `resources/auth.txt`, and iterate through `resources/fellows.csv`
 
 
 ### Requirements
