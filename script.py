@@ -42,10 +42,10 @@ class ConnectEndorse():
         for r in res[:10]:
             try:
                 self.scrollTo(r)        
-                #r.click()
-                #self.browser.implicitly_wait(5)
-                #self.getElementByTxt("Highly skilled")
-                #webdriver.ActionChains(self.browser).send_keys(Keys.ESCAPE).perform()
+                r.click()
+                self.browser.implicitly_wait(5)
+                self.getElementByTxt("Highly skilled")
+                webdriver.ActionChains(self.browser).send_keys(Keys.ESCAPE).perform()
             except:
                 print("exception occured in endorsement")
             # break
@@ -89,6 +89,7 @@ class ConnectEndorse():
         df = pd.read_csv(fellowPath)
         count = 0
         for idx,row in df.iterrows():
+
             if count > 3: break # for debugging
             # load user profile
             url = row['LinkedIn']
@@ -103,14 +104,16 @@ class ConnectEndorse():
                 self.clickButtonByText("Connect")
                 self.clickButtonByText("Send now")        
                 pass
+            elif self.containsTxt("1st"):
+                # check if friendship confirmed
+                self.endorse()
+                pass
             # check if friendship request pending
             elif self.containsTxt("Pending"):
                 print("pending friend request: {} {}".format(row['First name'],row['Last Name']))
                 pass
-            else: 
-                # check if friendship confirmed
-                self.endorse()
-                pass
+            pass
+
 
     
 if __name__ == "__main__":

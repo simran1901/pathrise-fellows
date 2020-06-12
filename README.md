@@ -29,3 +29,7 @@ In commandline run `python3 script.py`, this should start the selenium chrome dr
  * python3
  * panda
  * selenium webdriver(chrome)
+
+
+*bugs*
+Need to resolve issue with identifying whether profile is connected or pending, identifying these states are paramount
