@@ -58,7 +58,6 @@ class ConnectEndorse():
         keepScrolling = True
         count = 0
         while keepScrolling:
-            print(count)
             if count > maxScroll:
                 return False
             if self.containsTxt(txt):
