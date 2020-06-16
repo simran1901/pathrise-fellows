@@ -1,6 +1,8 @@
 # pathrise-fellows
 **Automatic connect and endorse**
 
+![Alt Text](https://github.com/jzisheng/pathrise-fellows/blob/testing/demo.gif)
+
 ### Instructions for installation: 
 
 Make sure to download the appropriate chromedriver [here](https://chromedriver.chromium.org/downloads)
