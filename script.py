@@ -22,37 +22,52 @@ class ConnectEndorse():
     def endorse(self):
         # scroll down pg dwn to load skills sec.
         # TODO: for some reason, for loop does not work with selenium
-        self.scrollDown()
-        self.scrollDown()
-        self.scrollDown()
-        self.scrollDown()
-        self.scrollDown()
-        self.scrollDownBottom()                
+        self.scrollUntil("Skills & Endorsements")
+        
         # Open skills and endorsements, show more
         elem = self.getElementByTxt("Skills & Endorsements")
         self.scrollTo(elem[0])  
-        self.browser.implicitly_wait(3)      
+        self.browser.implicitly_wait(3)
+
+        # Todo: multiple 'show more exists', be able to identify
         elem = self.getElementByTxt("Show more")
         self.scrollTo(elem[0])
         elem[0].click()
-        self.browser.implicitly_wait(3)    
+
+        #self.browser.implicitly_wait(3)    
         # res = self.browser.find_elements_by_xpath("//button[@aria-label[contains(.,'Endorse')]]")
         res = self.browser.find_elements_by_xpath(\
-                "//button[@aria-label[contains(.,'Endorse')] and @aria-pressed[contains(.,'false')] ]")    
+                "//button[@aria-label[contains(.,'Endorse')]"+\
+                " and @aria-pressed[contains(.,'false')] ]")    
         for r in res[:10]:
             try:
                 self.scrollTo(r)        
-                #r.click()
-                #self.browser.implicitly_wait(5)
-                #self.getElementByTxt("Highly skilled")
-                #webdriver.ActionChains(self.browser).send_keys(Keys.ESCAPE).perform()
+                r.click()
+                self.browser.implicitly_wait(5)
+                self.getElementByTxt("Highly skilled")
+                webdriver.ActionChains(self.browser).send_keys(Keys.ESCAPE).perform()
             except:
                 print("exception occured in endorsement")
             # break
             pass
         self.scrollDown()
         pass
+    
+    def scrollUntil(self,txt):
+        maxScroll = 15
+        keepScrolling = True
+        count = 0
+        while keepScrolling:
+            if count > maxScroll:
+                return False
+            if self.containsTxt(txt):
+                keepScrolling = False
+                return True
+            self.scrollDown()
+            count += 1    
+        
 
+    
     def scrollDown(self):
         body = self.browser.find_element_by_xpath('/html/body')
         ActionChains(self.browser).send_keys(Keys.PAGE_DOWN).perform()
@@ -77,7 +92,8 @@ class ConnectEndorse():
         #####
         # todo: have assert chromedriver available
         self.browser = webdriver.Chrome('/usr/local/bin/chromedriver')
-        self.browser.get('https://www.linkedin.com/login?fromSignIn=true&trk=guest_homepage-basic_nav-header-signin')
+        self.browser.get('https://www.linkedin.com/login?fromSignIn=true"+\
+                            "&trk=guest_homepage-basic_nav-header-signin')
         # todo: change this to be args passed in
         f = open(authPath,"r")
         userStr = f.readline()
@@ -89,28 +105,31 @@ class ConnectEndorse():
         df = pd.read_csv(fellowPath)
         count = 0
         for idx,row in df.iterrows():
+
             if count > 3: break # for debugging
             # load user profile
             url = row['LinkedIn']
-            self.browser.get(url)
-            self.browser.implicitly_wait(2)
-            # croll to loaded section
-            # elem = self.getElementByTxt("Highlights")
-            # self.scrollTo(elem[0])        
-            # check if friend request not sent
-            if self.containsTxt("Connect"):
-                print("sending friend request: {} {}".format(row['First name'],row['Last Name']))
-                self.clickButtonByText("Connect")
-                self.clickButtonByText("Send now")        
+            try:
+                self.browser.get(url)
+                self.browser.implicitly_wait(2)
+                if self.containsTxt("Connect"):
+                    print("sending friend request: {} {}".format(row['First name'],row['Last Name']))
+                    self.clickButtonByText("Connect")
+                    self.clickButtonByText("Send now")        
+                    pass
+                # check if friendship request pending
+                elif self.containsTxt("Pending"):
+                    print("pending friend request: {} {}".format(row['First name'],row['Last Name']))
+                    pass 
+                elif self.containsTxt("1st"):
+                    # check if friendship confirmed
+                    self.endorse()
+                    pass
                 pass
-            # check if friendship request pending
-            elif self.containsTxt("Pending"):
-                print("pending friend request: {} {}".format(row['First name'],row['Last Name']))
-                pass
-            else: 
-                # check if friendship confirmed
-                self.endorse()
-                pass
+            except:
+                print("Invalid URL for {} {}".format(row['First name'],row['Last Name']))
+            pass
+
 
     
 if __name__ == "__main__":
@@ -120,3 +139,4 @@ if __name__ == "__main__":
     args = parser.parse_args()    
     p = ConnectEndorse()
     p.main(args.loginPath,args.fellowsCsvPath)
+    pass

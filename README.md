@@ -1,6 +1,8 @@
 # pathrise-fellows
 **Automatic connect and endorse profiles in a CSV**
 
+![Alt Text](https://github.com/jzisheng/pathrise-fellows/blob/testing/demo.gif)
+
 ### Instructions for installation: 
 
 Make sure to download the appropriate chromedriver [here](https://chromedriver.chromium.org/downloads)
@@ -33,3 +35,7 @@ In commandline run `python3 script.py resources/auth.txt resources/fellows.csv`,
  * python3
  * panda
  * selenium webdriver(chrome)
+
+
+*bugs*
+Need to resolve issue with identifying whether profile is connected or pending, identifying these states are paramount
