@@ -36,6 +36,3 @@ In commandline run `python3 script.py resources/auth.txt resources/fellows.csv`,
  * panda
  * selenium webdriver(chrome)
 
-
-*bugs*
-Need to resolve issue with identifying whether profile is connected or pending, identifying these states are paramount
