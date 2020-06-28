@@ -7,7 +7,7 @@
 
 Make sure to download the appropriate chromedriver [here](https://chromedriver.chromium.org/downloads)
 
-For MacOS, install of chromedriver through homebrew (recommended) 
+For MacOS, install chromedriver through homebrew (recommended) 
 
 `brew cask install chromedriver`
 
@@ -31,7 +31,3 @@ In commandline run `python3 script.py`, this should start the selenium chrome dr
  * python3
  * panda
  * selenium webdriver(chrome)
-
-
-*bugs*
-Need to resolve issue with identifying whether profile is connected or pending, identifying these states are paramount
