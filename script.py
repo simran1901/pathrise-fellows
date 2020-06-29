@@ -20,8 +20,6 @@ class ConnectEndorse():
 
 
     def endorse(self):
-        # scroll down pg dwn to load skills sec.
-        # TODO: for some reason, for loop does not work with selenium
         self.scrollUntil("Skills & Endorsements")
         
         # Open skills and endorsements, show more
@@ -29,13 +27,11 @@ class ConnectEndorse():
         self.scrollTo(elem[0])  
         self.browser.implicitly_wait(3)
 
-        # Todo: multiple 'show more exists', be able to identify
+        # This opens the 'show more' right after skills and endorsements
         elem = self.getElementByTxt("Show more")
         self.scrollTo(elem[0])
         elem[0].click()
 
-        #self.browser.implicitly_wait(3)    
-        # res = self.browser.find_elements_by_xpath("//button[@aria-label[contains(.,'Endorse')]]")
         res = self.browser.find_elements_by_xpath(\
                 "//button[@aria-label[contains(.,'Endorse')]"+\
                 " and @aria-pressed[contains(.,'false')] ]")    
@@ -89,7 +85,6 @@ class ConnectEndorse():
 
 
     def main(self,authPath="resources/auth.txt",fellowPath="resources/fellows.csv"):
-        #####
         # todo: have assert chromedriver available
         self.browser = webdriver.Chrome('/usr/local/bin/chromedriver')
         self.browser.get('https://www.linkedin.com/login?fromSignIn=true"+\
@@ -105,7 +100,8 @@ class ConnectEndorse():
         df = pd.read_csv(fellowPath)
         count = 0
         for idx,row in df.iterrows():
-
+            # This loop iterates through the CSV, checking
+            # condition of friendship of user, and either connects or endorses
             if count > 3: break # for debugging
             # load user profile
             url = row['LinkedIn']
