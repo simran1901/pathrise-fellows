@@ -1,5 +1,6 @@
 import pandas as pd
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 import time
@@ -86,7 +87,21 @@ class ConnectEndorse():
 
     def main(self,authPath="resources/auth.txt",fellowPath="resources/fellows.csv"):
         # todo: have assert chromedriver available
-        self.browser = webdriver.Chrome('/usr/local/bin/chromedriver')
+        opt = Options()
+        opt.add_argument("--disable-infobars")
+        opt.add_argument("start-maximized")
+        opt.add_argument('--no-sandbox')
+        opt.add_argument("--disable-extensions")
+
+        # to  manage permssions un-comment these lines and adjust them accordingly.
+        # opt.add_experimental_option("prefs", {
+        #                                 "profile.default_content_setting_values.media_stream_mic": 1,
+        #                                 "profile.default_content_setting_values.media_stream_camera": 1,
+        #                                 "profile.default_content_setting_values.geolocation": 2,
+        #                                 "profile.default_content_setting_values.notifications": 2,
+        # })
+        
+        self.browser = webdriver.Chrome(options=opt, executable_path='/usr/local/bin/chromedriver')
         self.browser.get('https://www.linkedin.com/login?fromSignIn=true"+\
                             "&trk=guest_homepage-basic_nav-header-signin')
         # todo: change this to be args passed in
